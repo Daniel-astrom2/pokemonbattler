@@ -18,6 +18,7 @@ public class Pokemon {
         this.maxHp = maxHp;
         this.currentHp = maxHp;
         this.attacks = new ArrayList<>();
+
     }
 
     public void addAttack(Attack attack) {
@@ -47,6 +48,20 @@ public class Pokemon {
         this.maxHp = maxHp;
         this.currentHp = maxHp;
     }
+    public void takeDamage(int amount) {
+
+        if (amount < 0) {
+            throw new IllegalArgumentException("Skada kan inte vara negativ");
+        }
+
+
+        currentHp = Math.max(0, currentHp - amount);
+    }
+    public boolean isFainted() {
+        return currentHp == 0;
+    }
+
+
 
 
     public List<Attack> getAttacks()  {
