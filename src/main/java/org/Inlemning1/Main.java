@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) {
 
 
+
         Scanner scanner = new Scanner(System.in);
 
 
@@ -43,9 +44,12 @@ public class Main {
             System.out.println("9) Återställ seed-data");
             System.out.println("10) Spara");
             System.out.println("11) Ladda");
-            System.out.println("12) Avsluta");
+            System.out.println("12) Starta strid");
+            System.out.println("13) Stridsresultat");
+            System.out.println("14) Avsluta");
 
-            int choice = readIntInRange(scanner, "Val: ", 1, 12);
+
+            int choice = readIntInRange(scanner, "Val: ", 1, 14);
 
             // Här kommer vi lägga switchen
             switch (choice){
@@ -423,9 +427,20 @@ public class Main {
                     break;
 
                 case 12:
+                    Battle battle = new Battle();
+                    battle.start();
+                    break;
+
+                case 13:
+                    System.out.println("Inga stridsresultat sparade ännu.");
+                    break;
+
+                case 14:
                     saveToFile(pokedex);
                     System.out.println("Avslutar");
                     return;
+
+
 
 
 
