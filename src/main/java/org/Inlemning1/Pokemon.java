@@ -61,6 +61,14 @@ public class Pokemon {
         return currentHp == 0;
     }
 
+    public void heal(int amount) {
+        if (amount < 0) {
+            throw new IllegalArgumentException("Läkning kan inte vara negativ");
+        }
+
+        currentHp = Math.min(maxHp, currentHp + amount);
+    }
+
 
 
 
