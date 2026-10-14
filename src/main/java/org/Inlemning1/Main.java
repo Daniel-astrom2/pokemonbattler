@@ -13,6 +13,7 @@ public class Main {
 
 
         Scanner scanner = new Scanner(System.in);
+        Battle.loadResults();
 
 
         ArrayList<Pokemon> pokedex = new ArrayList<>();
@@ -432,7 +433,7 @@ public class Main {
                     break;
 
                 case 13:
-                    System.out.println("Inga stridsresultat sparade ännu.");
+                    Battle.showResults();
                     break;
 
                 case 14:

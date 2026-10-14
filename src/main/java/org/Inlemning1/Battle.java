@@ -162,7 +162,27 @@ public class Battle {
         } catch (IOException e) {
             System.out.println("Kunde inte spara stridsresultaten.");
         }
-    }
+
+
+        }
+        public static void loadResults() {
+            try {
+                Path file = Path.of("battle-results.txt");
+
+                if (Files.exists(file)) {
+                    List<String> lines = Files.readAllLines(file);
+
+                    if (lines.size() >= 2) {
+                        wins = Integer.parseInt(lines.get(0));
+                        losses = Integer.parseInt(lines.get(1));
+                    }
+                }
+            } catch (IOException | NumberFormatException e) {
+                System.out.println("Kunde inte läsa stridsresultaten.");
+            }
+        }
+
+
 
         private double getTypeMultiplier(Type attackType, Type defenderType) {
             if (attackType == Type.FIRE && defenderType == Type.GRASS) {
