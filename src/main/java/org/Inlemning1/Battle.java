@@ -2,6 +2,9 @@ package org.Inlemning1;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Random;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.IOException;
 
 public class Battle {
     private static int wins = 0;
@@ -105,6 +108,8 @@ public class Battle {
             if (cpuPokemon.isFainted()) {
                 System.out.println("CPU:s Pokémon har svimmat!");
                 System.out.println("Du vann striden!");
+                wins++;
+                saveResults();
                 return;
             }
 
@@ -137,8 +142,25 @@ public class Battle {
             if (selectedPokemon.isFainted()) {
                 System.out.println("Din Pokémon har svimmat!");
                 System.out.println("Du förlorade striden!");
+                losses++;
+                saveResults();
                 return;
             }
+        }
+    }
+    public static void showResults() {
+        System.out.println("\n--- STRIDSRESULTAT ---");
+        System.out.println("Vinster: " + wins);
+        System.out.println("Förluster: " + losses);
+
+
+    }
+    private static void saveResults() {
+        try {
+            String text = wins + "\n" + losses;
+            Files.writeString(Path.of("battle-results.txt"), text);
+        } catch (IOException e) {
+            System.out.println("Kunde inte spara stridsresultaten.");
         }
     }
 
