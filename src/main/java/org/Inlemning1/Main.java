@@ -428,7 +428,7 @@ public class Main {
 
                 case 12:
                     Battle battle = new Battle();
-                    battle.start();
+                    battle.start(pokedex);
                     break;
 
                 case 13:
