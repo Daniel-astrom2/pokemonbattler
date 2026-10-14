@@ -4,6 +4,9 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Battle {
+    private static int wins = 0;
+    private static int losses = 0;
+
     public void start(List<Pokemon> pokedex) {
         System.out.println("En Pokémon-strid startar!");
         System.out.println("Antal Pokémon att välja mellan: " + pokedex.size());
@@ -21,40 +24,40 @@ public class Battle {
                     + "/" + pokemon.getMaxHp());
         }
 
-            Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-            int choice = Main.readIntInRange(
-                    scanner,
-                    "Välj Pokémon: ",
-                    1,
-                    pokedex.size()
-            );
+        int choice = Main.readIntInRange(
+                scanner,
+                "Välj Pokémon: ",
+                1,
+                pokedex.size()
+        );
 
-            Pokemon selectedPokemon = pokedex.get(choice - 1);
+        Pokemon selectedPokemon = pokedex.get(choice - 1);
 
-            System.out.println("Du valde " + selectedPokemon.getName() + "!");
+        System.out.println("Du valde " + selectedPokemon.getName() + "!");
 
-            if (selectedPokemon.getAttacks().isEmpty()) {
-                System.out.println("Den här Pokémon har inga attacker och kan inte strida.");
-                return;
-            }
+        if (selectedPokemon.getAttacks().isEmpty()) {
+            System.out.println("Den här Pokémon har inga attacker och kan inte strida.");
+            return;
+        }
 
-            Random random = new Random();
-            Pokemon wildPokemon = pokedex.get(random.nextInt(pokedex.size()));
+        Random random = new Random();
+        Pokemon wildPokemon = pokedex.get(random.nextInt(pokedex.size()));
 
-            Pokemon cpuPokemon = new Pokemon(
-                    wildPokemon.getName(),
-                    wildPokemon.getType(),
-                    wildPokemon.getMaxHp()
+        Pokemon cpuPokemon = new Pokemon(
+                wildPokemon.getName(),
+                wildPokemon.getType(),
+                wildPokemon.getMaxHp()
 
-            );
-            for (Attack attack : wildPokemon.getAttacks()) {
-                cpuPokemon.addAttack(attack);
-            }
-            if (cpuPokemon.getAttacks().isEmpty()) {
-                System.out.println("CPU:s Pokémon har inga attacker. Striden avbryts.");
-                return;
-            }
+        );
+        for (Attack attack : wildPokemon.getAttacks()) {
+            cpuPokemon.addAttack(attack);
+        }
+        if (cpuPokemon.getAttacks().isEmpty()) {
+            System.out.println("CPU:s Pokémon har inga attacker. Striden avbryts.");
+            return;
+        }
         while (!selectedPokemon.isFainted() && !cpuPokemon.isFainted()) {
             System.out.println("\nVälj attack:");
 
@@ -62,7 +65,8 @@ public class Battle {
                 Attack attack = selectedPokemon.getAttacks().get(j);
 
                 System.out.println((j + 1) + ") " + attack.getName()
-                        + " - Skada: " + attack.getBaseDamage());
+                        + " - Skada: " + attack.getBaseDamage()
+                        + " - Träffsäkerhet: " + attack.getAccuracy() + "%");
             }
 
             int attackChoice = Main.readIntInRange(
@@ -76,11 +80,23 @@ public class Battle {
 
             System.out.println("Du valde attacken " + chosenAttack.getName() + "!");
 
-            int damage = chosenAttack.getBaseDamage();
+            if (random.nextInt(100) < chosenAttack.getAccuracy()) {
+                double multiplier = getTypeMultiplier(
+                        chosenAttack.getType(),
+                        cpuPokemon.getType()
+                );
 
-            cpuPokemon.takeDamage(damage);
+                double randomFactor = 0.85 + random.nextDouble() * 0.15;
 
-            System.out.println(cpuPokemon.getName() + " tog " + damage + " skada!");
+                int damage = (int) (chosenAttack.getBaseDamage()
+                        * multiplier * randomFactor);
+                cpuPokemon.takeDamage(damage);
+
+                System.out.println(cpuPokemon.getName() + " tog " + damage + " skada!");
+            } else {
+                System.out.println("Din attack missade!");
+            }
+
             System.out.println("CPU har " + cpuPokemon.getCurrentHp()
                     + "/" + cpuPokemon.getMaxHp() + " HP kvar.");
 
@@ -91,29 +107,71 @@ public class Battle {
                 System.out.println("Du vann striden!");
                 return;
             }
+
+            Attack cpuAttack = cpuPokemon.getAttacks().get(
+                    random.nextInt(cpuPokemon.getAttacks().size())
+            );
+
+            System.out.println("CPU använder " + cpuAttack.getName() + "!");
+
+            if (random.nextInt(100) < cpuAttack.getAccuracy()) {
+                double cpuMultiplier = getTypeMultiplier(
+                        cpuAttack.getType(),
+                        selectedPokemon.getType()
+                );
+
+                double cpuRandomFactor = 0.85 + random.nextDouble() * 0.15;
+
+                int cpuDamage = (int) (cpuAttack.getBaseDamage()
+                        * cpuMultiplier * cpuRandomFactor);
+                selectedPokemon.takeDamage(cpuDamage);
+
+                System.out.println(selectedPokemon.getName()
+                        + " tog " + cpuDamage + " skada!");
+            } else {
+                System.out.println("CPU:s attack missade!");
+            }
+
+            System.out.println("Du har " + selectedPokemon.getCurrentHp()
+                    + "/" + selectedPokemon.getMaxHp() + " HP kvar.");
+            if (selectedPokemon.isFainted()) {
+                System.out.println("Din Pokémon har svimmat!");
+                System.out.println("Du förlorade striden!");
+                return;
+            }
         }
-        Attack cpuAttack = cpuPokemon.getAttacks().get(
-                random.nextInt(cpuPokemon.getAttacks().size())
-        );
+    }
 
-        System.out.println("CPU använder " + cpuAttack.getName() + "!");
+        private double getTypeMultiplier(Type attackType, Type defenderType) {
+            if (attackType == Type.FIRE && defenderType == Type.GRASS) {
+                return 2.0;
+            }
+            if (attackType == Type.WATER && defenderType == Type.FIRE) {
+                return 2.0;
+            }
+            if (attackType == Type.GRASS && defenderType == Type.WATER) {
+                return 2.0;
+            }
+            if (attackType == Type.ELECTRIC && defenderType == Type.WATER) {
+                return 2.0;
+            }
+            if (attackType == Type.FIRE && defenderType == Type.WATER) {
+                return 0.5;
+            }
+            if (attackType == Type.WATER && defenderType == Type.GRASS) {
+                return 0.5;
+            }
+            if (attackType == Type.GRASS && defenderType == Type.FIRE) {
+                return 0.5;
+            }
 
-        int cpuDamage = cpuAttack.getBaseDamage();
-
-        selectedPokemon.takeDamage(cpuDamage);
-
-        System.out.println(selectedPokemon.getName() + " tog " + cpuDamage + " skada!");
-        System.out.println("Du har " + selectedPokemon.getCurrentHp()
-                + "/" + selectedPokemon.getMaxHp() + " HP kvar.");
-        if (selectedPokemon.isFainted()) {
-            System.out.println("Din Pokémon har svimmat!");
-            System.out.println("Du förlorade striden!");
-            return;
-        }
-
+            return 1.0;
         }
 
     }
+
+
+
 
 
 
