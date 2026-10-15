@@ -454,6 +454,10 @@ public class Main {
 
         while (true) {
             System.out.print(prompt);
+            if (!scanner.hasNextLine()) {
+                System.out.println("\nInmatningen avslutades. Programmet stängs.");
+                System.exit(0);
+            }
             String input = scanner.nextLine().trim();
 
             try {
