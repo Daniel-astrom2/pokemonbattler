@@ -133,7 +133,7 @@ public class Battle {
             System.out.println("CPU har " + cpuPokemon.getCurrentHp()
                     + "/" + cpuPokemon.getMaxHp() + " HP kvar.");
 
-            System.out.println("CPU valde" + cpuPokemon.getName() + "!");
+            System.out.println("CPU valde " + cpuPokemon.getName() + "!");
 
             if (cpuPokemon.isFainted()) {
                 System.out.println("CPU:s Pokémon har svimmat!");
