@@ -65,22 +65,18 @@ public class Battle {
         }
 
         Random random = new Random();
-        List<Pokemon> availablePokemon = new java.util.ArrayList<>();
 
-        for (Pokemon pokemon : pokedex) {
-            if (!pokemon.getAttacks().isEmpty()) {
-                availablePokemon.add(pokemon);
-            }
+
+        Pokemon wildPokemon;
+
+        if (random.nextBoolean()) {
+            wildPokemon = new Pokemon("Rattata", Type.NORMAL, 100);
+            wildPokemon.addAttack(new Attack("Bite", 40, 90, Type.NORMAL));
+        } else {
+            wildPokemon = new Pokemon("Pidgey", Type.NORMAL, 100);
+            wildPokemon.addAttack(new Attack("Gust", 40, 100, Type.NORMAL));
         }
 
-        if (availablePokemon.isEmpty()) {
-            System.out.println("Det finns inga Pokémon med attacker att möta.");
-            return;
-        }
-
-        Pokemon wildPokemon = availablePokemon.get(
-                random.nextInt(availablePokemon.size())
-        );
 
         Pokemon cpuPokemon = new Pokemon(
                 wildPokemon.getName(),
