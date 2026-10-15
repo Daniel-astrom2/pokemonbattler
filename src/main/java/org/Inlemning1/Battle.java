@@ -71,9 +71,11 @@ public class Battle {
         if (random.nextBoolean()) {
             wildPokemon = new Pokemon("Rattata", Type.NORMAL, 100);
             wildPokemon.addAttack(new Attack("Bite", 40, 90, Type.NORMAL));
+            wildPokemon.addAttack(new Attack("Quick Attack", 30, 100, Type.NORMAL));
         } else {
             wildPokemon = new Pokemon("Pidgey", Type.NORMAL, 100);
             wildPokemon.addAttack(new Attack("Gust", 40, 100, Type.NORMAL));
+            wildPokemon.addAttack(new Attack("Tackle", 35, 95, Type.NORMAL));
         }
 
 
