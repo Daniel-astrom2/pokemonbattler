@@ -483,6 +483,10 @@ public class Main {
     public static String readNonEmptyString(Scanner scanner, String prompt) {
         while (true) {
             System.out.println(prompt);
+            if (!scanner.hasNextLine()) {
+                System.out.println("\nInmatningen avslutades. Programmet stängs.");
+                System.exit(0);
+            }
             String input = scanner.nextLine().trim();
 
             if (!input.isEmpty()) {

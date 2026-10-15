@@ -61,3 +61,24 @@ Välj ett alternativ i konsolmenyn.
 Välj alternativ 12 för att starta en strid.
 
 Välj alternativ 13 för att visa stridsresultat.
+
+lumpfaktorn är mellan 0,85 och 1,0.
+Typeffektiviteten kan vara 0,5, 1,0 eller 2,0
+beroende på Pokémon-typerna.
+
+## OOP och kodstruktur
+Pokemon-klassen hanterar Pokémonens namn, typ, HP och attacker.
+Attack-klassen innehåller information om en attack.
+Battle-klassen ansvarar för stridssystemet och stridsresultat.
+Main-klassen ansvarar för huvudmenyn och Pokédex-funktionerna.
+
+Klasserna har olika ansvarsområden för att hålla koden
+tydligare och enklare att vidareutveckla.
+
+## VG-krav
+Jag siktar på betyget G. Typeffektivitet finns med i
+stridssystemet, men övriga VG-krav är inte implementerade.
+
+## Kända begränsningar
+Pokémonens aktuella HP sparas inte mellan programstarter.
+När programmet startas om får Pokémon full HP igen.
