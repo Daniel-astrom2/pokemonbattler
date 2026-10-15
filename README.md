@@ -1,33 +1,63 @@
- Pokédex
+Pokémon Battler
 
-Detta är min första inlämningsuppgift i Java.
+Detta är min andra inlämningsuppgift i Java.
 
-Programmet är en Pokédex som körs i konsolen. Användaren kan lägga till, visa, söka, ändra och ta bort Pokemon.
+Programmet är en vidareutveckling av min Pokédex från inlämning 1. Det körs i konsolen och låter användaren hantera Pokémon och spela strider mot datorn.
 
-## Funktioner
+Funktioner
 
-- Lägg till Pokemon
-- Visa alla Pokemon
-- Sök efter Pokemon
-- Ta bort Pokemon
-- Ändra Pokemon och attacker
-- Filtrera Pokemon efter typ
-- Sortera Pokemon efter namn
-- Visa statistik
-- Återställ seed-data
-- Spara och ladda Pokedex från fil
-- Automatisk sparning när programmet avslutas
+Lägga till, visa, söka, ändra och ta bort Pokémon
 
-## Data
+Filtrera Pokémon efter typ
 
-Programmet använder en ArrayList för att lagra Pokemon medan programmet körs.
+Sortera Pokémon efter namn
 
-Data sparas i filen `pokedex.txt`.
+Visa statistik
 
-Om filen inte finns när programmet startar skapas seed-data med sex Pokemon.
+Återställa seed-data med sex Pokémon
 
- Teknik
+Spara och ladda Pokédex från fil
 
-- Java
-- Maven
-- java.nio.file för filhantering
+Starta Pokémon-strider mot datorn
+
+Välja Pokémon och attack
+
+Turordningsbaserade strider med HP och skada
+
+Träffsäkerhet och typeffektivitet
+
+Visa antal vinster och förluster
+
+Spara och läsa in stridsresultat
+
+Lagring
+
+Programmet använder en ArrayList för att lagra Pokémon under körning.
+
+Pokédex sparas i pokedex.txt.
+
+Stridsresultat sparas i battle-results.txt och läses in när programmet startar.
+
+Om pokedex.txt saknas används sex Pokémon som seed-data.
+
+Teknik
+
+Java
+
+Maven
+
+ArrayList
+
+java.nio.file för filhantering
+
+Starta programmet
+
+Öppna projektet i IntelliJ IDEA.
+
+Kör Main.java.
+
+Välj ett alternativ i konsolmenyn.
+
+Välj alternativ 12 för att starta en strid.
+
+Välj alternativ 13 för att visa stridsresultat.
