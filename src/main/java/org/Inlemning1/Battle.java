@@ -17,6 +17,20 @@ public class Battle {
             System.out.println("Du har inga Pokémon. Lägg till en Pokémon först!");
             return;
         }
+        boolean hasHealthyPokemon = false;
+
+        for (Pokemon pokemon : pokedex) {
+            if (!pokemon.isFainted() && !pokemon.getAttacks().isEmpty()) {
+                hasHealthyPokemon = true;
+                break;
+            }
+        }
+
+        if (!hasHealthyPokemon) {
+            System.out.println("Du har inga Pokémon som kan strida!");
+            return;
+        }
+
         System.out.println("\nVälj din Pokémon:");
 
         for (int i = 0; i < pokedex.size(); i++) {
@@ -38,6 +52,11 @@ public class Battle {
 
         Pokemon selectedPokemon = pokedex.get(choice - 1);
 
+        if (selectedPokemon.isFainted()) {
+            System.out.println("Den här Pokémon har 0 HP och kan inte strida!");
+            return;
+        }
+
         System.out.println("Du valde " + selectedPokemon.getName() + "!");
 
         if (selectedPokemon.getAttacks().isEmpty()) {
@@ -46,7 +65,22 @@ public class Battle {
         }
 
         Random random = new Random();
-        Pokemon wildPokemon = pokedex.get(random.nextInt(pokedex.size()));
+        List<Pokemon> availablePokemon = new java.util.ArrayList<>();
+
+        for (Pokemon pokemon : pokedex) {
+            if (!pokemon.getAttacks().isEmpty()) {
+                availablePokemon.add(pokemon);
+            }
+        }
+
+        if (availablePokemon.isEmpty()) {
+            System.out.println("Det finns inga Pokémon med attacker att möta.");
+            return;
+        }
+
+        Pokemon wildPokemon = availablePokemon.get(
+                random.nextInt(availablePokemon.size())
+        );
 
         Pokemon cpuPokemon = new Pokemon(
                 wildPokemon.getName(),
