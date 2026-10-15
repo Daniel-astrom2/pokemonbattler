@@ -10,7 +10,7 @@ public class Battle {
     private static int wins = 0;
     private static int losses = 0;
 
-    public void start(List<Pokemon> pokedex) {
+    public void start(List<Pokemon> pokedex, Scanner scanner) {
         System.out.println("En Pokémon-strid startar!");
         System.out.println("Antal Pokémon att välja mellan: " + pokedex.size());
         if (pokedex.isEmpty()) {
@@ -41,7 +41,6 @@ public class Battle {
                     + "/" + pokemon.getMaxHp());
         }
 
-        Scanner scanner = new Scanner(System.in);
 
         int choice = Main.readIntInRange(
                 scanner,

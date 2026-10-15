@@ -429,7 +429,7 @@ public class Main {
 
                 case 12:
                     Battle battle = new Battle();
-                    battle.start(pokedex);
+                    battle.start(pokedex, scanner);
                     break;
 
                 case 13:
